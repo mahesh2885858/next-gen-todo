@@ -36,7 +36,7 @@ export default function NavBar(props: PageProps) {
         } md:right-auto`}
       >
         <li className="hover:cursor-pointer" onClick={toggleDarkMode}>
-          <ThemeSwitcher />
+          <ThemeSwitcher darkMode={darkMode} />
         </li>
         <Link href={"/login"}>Login/Register</Link>
         <a href="/about">About</a>

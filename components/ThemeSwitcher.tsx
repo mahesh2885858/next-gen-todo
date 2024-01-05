@@ -1,14 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
-
-export default function ThemeSwitcher() {
-  const darkMode = localStorage.theme === "light" ? false : true;
+type Props = {
+  darkMode: boolean;
+};
+export default function ThemeSwitcher(props: Props) {
+  const darkMode = props.darkMode;
 
   return (
     <svg
-      stroke="red"
+      // stroke="red"
       className=""
-      stroke-width="0"
       viewBox="0 0 48 24"
       height="24"
       width="48"
