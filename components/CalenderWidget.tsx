@@ -138,7 +138,7 @@ export default function CalenderWidget() {
               trackingDate === d &&
               trackingMonth === new Date().getMonth() + 1 &&
               trackingYear === new Date().getFullYear()
-                ? " dark:bg-purple-400 rounded"
+                ? " dark:bg-purple-400 bg-blue-500 text-white dark:text-black rounded"
                 : " "
             } w-[13%] p-1 place-self-center hover:cursor-pointer hover:dark:bg-purple-200`}
           >
