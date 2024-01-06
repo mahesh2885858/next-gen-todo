@@ -1,6 +1,6 @@
-import { TState, TActionTypes, TActions } from "@/Types";
+import { TDataState, TActionTypes, TActions } from "@/Types";
 
-const Reducer = (state: TState[], actions: TActions): TState[] => {
+const Reducer = (state: TDataState[], actions: TActions): TDataState[] => {
   const workingState = [...state];
   switch (actions.type) {
     case "ADD-TODO":
