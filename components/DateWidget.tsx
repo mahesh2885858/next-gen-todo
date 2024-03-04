@@ -13,7 +13,7 @@ export default function DateWidget() {
     };
   }, []);
   return (
-    <span className=" bg-white relative text-blue-900 dark:bg-white dark:text-purple-950 p-2 flex flex-col w-5/12 md:w-1/4 rounded">
+    <span className=" bg-white relative text-blue-900 dark:bg-white dark:text-purple-950 p-2 flex flex-col w-full md:w-1/3 rounded">
       <span
         title="The world is still intact!!"
         className=" absolute h-3 w-3 top-3  right-3   rounded-full bg-blue-950 dark:bg-purple-950 animate-pulse "

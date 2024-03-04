@@ -1,14 +1,16 @@
 import useAppContext from "@/customHooks/useAppContext";
 
 export default function AddTodoWidget() {
-  const { dispatch, state } = useAppContext();
+  const { dispatch, state, uiState, formState, todoIdToUpdate } =
+    useAppContext();
   return (
     <div
       onClick={() => {
-        console.log({ state, dispatch });
-        dispatch({ type: "ADD-TODO" });
+        uiState.setOverlayShown(true);
+        formState.setFormStatus("AddNew");
+        todoIdToUpdate.setEditId(null);
       }}
-      className="bg-white hover:cursor-pointer mt-4 relative  text-blue-900  dark:text-purple-950 p-2 flex flex-col w-5/12 md:w-1/4 rounded"
+      className={`bg-white transition-all duration-200 ease-linear hover:cursor-pointer mt-4  text-blue-900  dark:text-purple-950 p-2 flex flex-col w-full md:w-1/3 rounded`}
     >
       Add todo {state.length}
       <span className="text-sm">start from here!!</span>

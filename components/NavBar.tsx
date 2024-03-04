@@ -16,7 +16,7 @@ export default function NavBar(props: PageProps) {
     setIsHamMenuOpened((p) => !p);
   }
   return (
-    <nav className="flex relative overflow-x-clip  items-center justify-between p-4 ">
+    <nav className="flex relative overflow-x-clip z-50 items-center justify-between p-4 ">
       <header className="p-2 flex items-center">
         <Link href={"/"} className="hidden md:block font-bold text-xl">
           NG-TODO
