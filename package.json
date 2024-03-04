@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
+    "accordion-slider-js": "^1.0.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
@@ -19,6 +22,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "cypress": "^13.6.2",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "postcss": "^8",

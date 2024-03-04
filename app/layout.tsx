@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import { useEffect, useLayoutEffect, useState } from "react";
-
+import ContextProvider from "@/state/ContextProvider";
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
@@ -38,11 +38,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className=" dark:bg-purple-950 bg-blue-950 text-white flex  flex-col w-screen overflow-x-hidden  ">
-        <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <ContextProvider>
+        <body className=" dark:bg-purple-950 bg-blue-950 text-white flex  flex-col w-screen overflow-x-hidden  ">
+          <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
-        {children}
-      </body>
+          {children}
+        </body>
+      </ContextProvider>
     </html>
   );
 }
