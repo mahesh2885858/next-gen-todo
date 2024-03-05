@@ -111,8 +111,8 @@ export default function CalenderWidget() {
     setThisMonth(arr);
   }, [trackingMonth]);
   return (
-    <div className="bg-white p-2 mt-4 gap-2 text-blue-950 dark:text-purple-950 rounded w-full md:w-1/3 flex flex-col ">
-      <div className="nav flex w-full  justify-around items-center">
+    <div className="bg-white p-2 mt-4 gap-2 text-blue-950 dark:text-purple-950 rounded w-full md:w-11/12 flex flex-col col-start-1 row-start-2 col-span-2 row-span-3 justify-self-center ">
+      <div className="nav flex w-full my-4  justify-around items-center">
         <span onClick={() => goToPrevOrNextMonth("prev")}>
           <GrFormPrevious className="text-xl hover:cursor-pointer" />
         </span>
