@@ -4,7 +4,7 @@ import Reducer from "./Reducer";
 const initState: TDataState = {
   createdAt: new Date(),
   id: "",
-  name: "",
+  toBeCompletedBy: new Date(),
   todo: "",
   updatedAt: new Date(),
 };

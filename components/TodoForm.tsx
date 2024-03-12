@@ -1,5 +1,6 @@
 import useAppContext from "@/customHooks/useAppContext";
 import React, { useState } from "react";
+import TaskList from "./TaskList";
 
 function TodoForm() {
   const { dispatch, state, uiState, todoIdToUpdate, formState } =
@@ -8,8 +9,9 @@ function TodoForm() {
     ? state.filter((i) => i.id === todoIdToUpdate.editId)[0]
     : null;
   const [inputs, setInputs] = useState({
-    title: todo?.name ?? "",
-    todo: todo?.todo ?? "",
+    todo: "",
+    desc: "",
+    time: "",
   });
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,41 +34,47 @@ function TodoForm() {
       formState.setFormStatus("AddNew");
       return;
     }
+    console.log({ formDataObject });
     dispatch({ type: "ADD-TODO", data: formDataObject });
   };
   return (
-    <div className="p-4 rounded-md bg-white text-black flex flex-col gap-4 justify-center items-center w-full shadow-md ">
-      TodoForm
-      <form
-        onSubmit={handleAddTodo}
-        className="flex flex-col justify-center items-center gap-4 w-full"
-      >
+    <form
+      onSubmit={handleAddTodo}
+      className=" w-full md:w-1/2  p-2 md:p-4 flex flex-col gap-4 text-lg"
+    >
+      <input
+        type="text"
+        name="todo"
+        id="todo"
+        value={inputs.todo}
+        onChange={onChange}
+        placeholder="What is your Task??"
+        className="bg-transparent border border-white rounded p-2 w-11/12 text-lg"
+      />
+      <div className=" flex gap-2 md:gap-4 items-center">
+        <label htmlFor="time">Choose time of completion:</label>
         <input
+          type="datetime-local"
+          value={inputs.time}
           onChange={onChange}
-          className="p-2 w-4/5 outline-1 border-2"
-          required
-          type="text"
-          name="title"
-          id="title"
-          placeholder="Title"
-          value={inputs.title}
+          name="time"
+          className="bg-transparent border border-white rounded p-1"
+          id="time"
         />
-        <textarea
-          className="p-2 w-4/5 outline-1 border-2 resize-none "
-          required
-          onChange={onChange}
-          name="todo"
-          id="todo"
-          placeholder="Todo"
-          rows={10}
-          value={inputs.todo}
-        />
-
-        <button className="bg-blue-500 text-white dark:text-black px-4 p-2 rounded-sm dark:bg-purple-500 ">
-          {formState.formStatus === "AddNew" ? "Add" : "Update"}
-        </button>
-      </form>
-    </div>
+      </div>
+      <textarea
+        className="bg-transparent p-2 rounded border border-white"
+        name="desc"
+        id="desc"
+        value={inputs.desc}
+        onChange={onChange}
+        cols={20}
+        rows={10}
+      ></textarea>
+      <button className="bg-white text-black p-2 rounded cursor-pointer">
+        Add
+      </button>
+    </form>
   );
 }
 

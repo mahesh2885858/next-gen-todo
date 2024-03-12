@@ -1,3 +1,4 @@
+import useAppContext from "@/customHooks/useAppContext";
 import { useEffect, useState } from "react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 export default function CalenderWidget() {
@@ -57,6 +58,7 @@ export default function CalenderWidget() {
   const [trackingDay, setTrackingDay] = useState(new Date().getDay());
   const [trackingMonth, setTrackingMonth] = useState(new Date().getMonth() + 1);
   const [trackingYear, setTrackingYear] = useState(new Date().getFullYear());
+  const { state } = useAppContext();
   const getTheFirstAndLastDayOfMonth = (year: number, month: number) => {
     const firstDayOfMonth = new Date(year, month - 1, 1);
     const lastDayOfMonth = new Date(year, month, 0);
@@ -134,6 +136,13 @@ export default function CalenderWidget() {
       <div className="dates pl-4 flex w-full flex-wrap gap-1 items-center">
         {thisMonth.map((d) => (
           <span
+            title={state
+              .filter((v) => {
+                const da = new Date(v.toBeCompletedBy).getDate();
+                if (da === d) return true;
+                return false;
+              })
+              .length.toString()}
             className={`${
               trackingDate === d &&
               trackingMonth === new Date().getMonth() + 1 &&
