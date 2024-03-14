@@ -1,4 +1,5 @@
 import useAppContext from "@/customHooks/useAppContext";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 export default function CalenderWidget() {
@@ -59,6 +60,11 @@ export default function CalenderWidget() {
   const [trackingMonth, setTrackingMonth] = useState(new Date().getMonth() + 1);
   const [trackingYear, setTrackingYear] = useState(new Date().getFullYear());
   const { state } = useAppContext();
+  const tasksForThisMonth = state.filter(
+    (v, i) =>
+      v.targetDate.month === ("0" + trackingMonth).slice(-2) &&
+      v.targetDate.year === trackingYear
+  );
   const getTheFirstAndLastDayOfMonth = (year: number, month: number) => {
     const firstDayOfMonth = new Date(year, month - 1, 1);
     const lastDayOfMonth = new Date(year, month, 0);
@@ -135,11 +141,12 @@ export default function CalenderWidget() {
       </div>
       <div className="dates pl-4 flex w-full flex-wrap gap-1 items-center">
         {thisMonth.map((d) => (
-          <span
-            title={state
-              .filter((v) => {
-                const da = new Date(v.toBeCompletedBy).getDate();
-                if (da === d) return true;
+          <Link
+            href={`/add-todo?date=${d}&month=${trackingMonth}&year=${trackingYear}`}
+            title={tasksForThisMonth
+              .filter(({ targetDate }) => {
+                const { day } = targetDate;
+                if (day === ("0" + d).slice(-2)) return true;
                 return false;
               })
               .length.toString()}
@@ -152,7 +159,7 @@ export default function CalenderWidget() {
             } w-[13%] p-1 place-self-center hover:cursor-pointer hover:dark:bg-purple-200`}
           >
             {d ? d : ""}
-          </span>
+          </Link>
         ))}
       </div>
     </div>

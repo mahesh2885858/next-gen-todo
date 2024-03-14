@@ -7,6 +7,12 @@ export type TDataState = {
   createdAt: Date;
   updatedAt: Date;
   toBeCompletedBy: string;
+  isItCompleted: boolean;
+  targetDate: {
+    day: string;
+    month: string;
+    year: number;
+  };
 };
 export type TUiState = {
   overlayShown: boolean;

@@ -5,6 +5,7 @@ const Reducer = (state: TDataState[], actions: TActions): TDataState[] => {
   switch (actions.type) {
     case "ADD-TODO":
       const { description, todo, time } = actions.data;
+      const parsedDate = new Date(time);
       workingState.unshift({
         createdAt: new Date(),
         id: String(Date.now()),
@@ -12,6 +13,12 @@ const Reducer = (state: TDataState[], actions: TActions): TDataState[] => {
         updatedAt: new Date(),
         toBeCompletedBy: time,
         description,
+        isItCompleted: false,
+        targetDate: {
+          day: ("0" + parsedDate.getDate()).slice(-2),
+          month: ("0" + (parsedDate.getMonth() + 1)).slice(-2),
+          year: parsedDate.getFullYear(),
+        },
       });
       return workingState;
     case "EDIT-TODO":
