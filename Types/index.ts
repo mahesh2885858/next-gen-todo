@@ -2,10 +2,17 @@ import React from "react";
 
 export type TDataState = {
   id: string;
-  name: string;
+  description: string;
   todo: string;
   createdAt: Date;
   updatedAt: Date;
+  toBeCompletedBy: string;
+  isItCompleted: boolean;
+  targetDate: {
+    day: string;
+    month: string;
+    year: number;
+  };
 };
 export type TUiState = {
   overlayShown: boolean;

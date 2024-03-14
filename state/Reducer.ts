@@ -2,19 +2,27 @@ import { TDataState, TActionTypes, TActions } from "@/Types";
 
 const Reducer = (state: TDataState[], actions: TActions): TDataState[] => {
   const workingState = [...state];
-  const { title, todo } = actions.data;
   switch (actions.type) {
     case "ADD-TODO":
-      workingState.push({
+      const { description, todo, time } = actions.data;
+      const parsedDate = new Date(time);
+      workingState.unshift({
         createdAt: new Date(),
         id: String(Date.now()),
-        name: title,
         todo: todo,
         updatedAt: new Date(),
+        toBeCompletedBy: time,
+        description,
+        isItCompleted: false,
+        targetDate: {
+          day: ("0" + parsedDate.getDate()).slice(-2),
+          month: ("0" + (parsedDate.getMonth() + 1)).slice(-2),
+          year: parsedDate.getFullYear(),
+        },
       });
       return workingState;
     case "EDIT-TODO":
-      const { todoId } = actions.data;
+      const { todoId, title } = actions.data;
       return workingState.map((item, index) => {
         if (item.id !== todoId) return item;
         return {

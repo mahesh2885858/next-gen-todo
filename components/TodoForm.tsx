@@ -1,16 +1,36 @@
 import useAppContext from "@/customHooks/useAppContext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import TaskList from "./TaskList";
+import useGetParamsFromUrl from "@/customHooks/useGetParamsFromUrl";
 
 function TodoForm() {
   const { dispatch, state, uiState, todoIdToUpdate, formState } =
     useAppContext();
-  const todo = todoIdToUpdate.editId
-    ? state.filter((i) => i.id === todoIdToUpdate.editId)[0]
-    : null;
+  const { dateFromUrl } = useGetParamsFromUrl();
+  let defaultDate = "asdf";
+  const d = new Date();
+  if (dateFromUrl) {
+    const { date, month, year } = dateFromUrl!;
+    d.setDate(Number(date));
+    d.setMonth(Number(month));
+    d.setFullYear(Number(year));
+    defaultDate = `${year}-${month}-${date}T${("0" + d.getHours()).slice(
+      -2
+    )}:${("0" + d.getMinutes()).slice(-2)}`;
+  } else {
+    defaultDate = `${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(
+      -2
+    )}-${("0" + d.getDate()).slice(-2)}T${("0" + d.getHours()).slice(-2)}:${(
+      "0" + d.getMinutes()
+    ).slice(-2)}`;
+  }
+
   const [inputs, setInputs] = useState({
-    title: todo?.name ?? "",
-    todo: todo?.todo ?? "",
+    todo: "",
+    description: "",
+    time: defaultDate,
   });
+
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -32,41 +52,64 @@ function TodoForm() {
       formState.setFormStatus("AddNew");
       return;
     }
+    console.log({ formDataObject });
     dispatch({ type: "ADD-TODO", data: formDataObject });
   };
+  useEffect(() => {
+    if ((dateFromUrl && todoIdToUpdate.editId) || todoIdToUpdate.editId) {
+      const { description, todo } = state.filter(
+        (s) => s.id === todoIdToUpdate.editId
+      )[0];
+      setInputs({
+        description: description,
+        todo: todo,
+        time: defaultDate,
+      });
+    }
+    return () => {
+      todoIdToUpdate.setEditId(null);
+    };
+  }, [todoIdToUpdate.editId]);
   return (
-    <div className="p-4 rounded-md bg-white text-black flex flex-col gap-4 justify-center items-center w-full shadow-md ">
-      TodoForm
-      <form
-        onSubmit={handleAddTodo}
-        className="flex flex-col justify-center items-center gap-4 w-full"
-      >
+    <form
+      onSubmit={handleAddTodo}
+      className=" w-full md:w-1/2  p-2 md:p-4 flex flex-col gap-4 text-lg"
+    >
+      <input
+        required
+        type="text"
+        name="todo"
+        id="todo"
+        value={inputs.todo}
+        onChange={onChange}
+        placeholder="What is your Task??"
+        className="bg-transparent border border-white rounded p-2 md:w-11/12 text-lg"
+      />
+      <div className=" flex flex-col w-full md:w-11/12  gap-2 md:gap-4 items-start">
+        <label htmlFor="time">Choose time of completion:</label>
         <input
-          onChange={onChange}
-          className="p-2 w-4/5 outline-1 border-2"
           required
-          type="text"
-          name="title"
-          id="title"
-          placeholder="Title"
-          value={inputs.title}
-        />
-        <textarea
-          className="p-2 w-4/5 outline-1 border-2 resize-none "
-          required
+          type="datetime-local"
+          value={inputs.time}
           onChange={onChange}
-          name="todo"
-          id="todo"
-          placeholder="Todo"
-          rows={10}
-          value={inputs.todo}
+          name="time"
+          className="bg-transparent border border-white rounded p-1 w-full"
+          id="time"
         />
-
-        <button className="bg-blue-500 text-white dark:text-black px-4 p-2 rounded-sm dark:bg-purple-500 ">
-          {formState.formStatus === "AddNew" ? "Add" : "Update"}
-        </button>
-      </form>
-    </div>
+      </div>
+      <textarea
+        className="bg-transparent p-2 rounded border border-white md:w-11/12 "
+        name="description"
+        id="description"
+        value={inputs.description}
+        onChange={onChange}
+        cols={20}
+        rows={10}
+      ></textarea>
+      <button className="bg-white text-black p-2 rounded cursor-pointer md:w-11/12">
+        Add
+      </button>
+    </form>
   );
 }
 

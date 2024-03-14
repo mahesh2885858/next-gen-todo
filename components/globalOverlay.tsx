@@ -13,7 +13,7 @@ const OverLay = (props: Props) => {
     >
       <div className=" flex h-full justify-center items-center">
         <div
-          className="  flex w-4/5 md:w-3/5 justify-center items-center z-[2000]"
+          className="  flex w-4/5 md:w-3/5 justify-center items-center z-[2000] h-full"
           onClick={(e) => {
             e.stopPropagation();
           }}

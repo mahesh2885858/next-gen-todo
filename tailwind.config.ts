@@ -14,7 +14,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       height: {
-        calcMd: "calc(100vh - 76px)",
+        calcMd: "calc(100vh - 77px)",
         calc: "calc(100vh - 66px)",
       },
 
