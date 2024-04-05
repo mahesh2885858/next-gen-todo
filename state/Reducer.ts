@@ -6,6 +6,7 @@ const Reducer = (state: TDataState[], actions: TActions): TDataState[] => {
     case "ADD-TODO":
       const { description, todo, time } = actions.data;
       const parsedDate = new Date(time);
+      console.log({ parsedDate });
       workingState.unshift({
         createdAt: new Date(),
         id: String(Date.now()),
