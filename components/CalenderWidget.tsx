@@ -1,7 +1,12 @@
 import useAppContext from "@/customHooks/useAppContext";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+
+
+
 export default function CalenderWidget() {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -51,6 +56,10 @@ export default function CalenderWidget() {
       });
     }
   };
+  const container_3 = useRef<HTMLDivElement | null>(null)
+  useGSAP(() => {
+    gsap.from(container_3.current, { scale: 0, ease: "sine.out", delay: 1.25 })
+  }, { scope: container_3 })
   useEffect(() => {
     const arr: number[] = [];
     const [f, l] = getTheFirstAndLastDayOfMonth(trackingYear, trackingMonth);
@@ -70,7 +79,7 @@ export default function CalenderWidget() {
     setThisMonth(arr);
   }, [trackingMonth]);
   return (
-    <div className="bg-white p-2 mt-4 gap-2 text-blue-950 dark:text-purple-950 rounded w-full md:w-11/12 grid grid-cols-7 grid-rows-8 col-start-1 row-start-2 col-span-2 row-span-3 justify-self-center ">
+    <div ref={container_3} className="bg-white p-2 mt-4 gap-2 text-blue-950 dark:text-purple-950 rounded w-full md:w-11/12 grid grid-cols-7 grid-rows-8 col-start-1 row-start-2 col-span-2 row-span-3 justify-self-center ">
       <div className="nav col-start-1 col-span-7 row-start-1 row-span-1 flex w-full my-4  justify-around items-center">
         <span onClick={() => goToPrevOrNextMonth("prev")}>
           <GrFormPrevious className="text-xl hover:cursor-pointer" />
