@@ -53,8 +53,8 @@ function TodoForm() {
       formState.setFormStatus("AddNew");
       return;
     }
-    console.log({ formDataObject });
     dispatch({ type: "ADD-TODO", data: { description, todo, time } });
+    setInputs(p => ({ ...p, description: "", todo: "" }))
   };
   useEffect(() => {
     if ((dateFromUrl && todoIdToUpdate.editId) || todoIdToUpdate.editId) {
@@ -93,7 +93,7 @@ function TodoForm() {
           type="datetime-local"
           value={inputs.time}
           onChange={onChange}
-          disabled={true}
+
           name="time"
           className="bg-transparent border border-white rounded p-1 w-full"
           id="time"
