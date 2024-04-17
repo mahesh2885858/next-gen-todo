@@ -33,6 +33,13 @@ const Reducer = (state: TDataState[], actions: TActions): TDataState[] => {
           updatedAt: new Date(),
         };
       });
+    case "COMPLETE-TODO":
+      return workingState.map((item, i) => {
+        if (item.id === actions.data.todoId)
+          return { ...item, isItCompleted: true };
+        return item;
+      });
+
     default:
       return state;
   }

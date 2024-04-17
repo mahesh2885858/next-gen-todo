@@ -21,6 +21,7 @@ export type TUiState = {
 export type TActionTypes = {
   "ADD-TODO": "add-todo";
   "EDIT-TODO": "edit-todo";
+  "COMPLETE-TODO": "complete-todo";
 };
 export type TActions = {
   type: keyof TActionTypes;
