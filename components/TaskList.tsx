@@ -3,7 +3,7 @@ import useAppContext from "@/customHooks/useAppContext";
 import useGetParamsFromUrl from "@/customHooks/useGetParamsFromUrl";
 import { TDataState } from "@/Types";
 const TaskList = () => {
-  const { state, todoIdToUpdate } = useAppContext();
+  const { state, todoIdToUpdate, dispatch } = useAppContext();
   const { dateFromUrl } = useGetParamsFromUrl();
   const formatDate = (date: string) => {
     const d = new Date(date);
@@ -33,8 +33,15 @@ const TaskList = () => {
         return (
           <div key={todo.id} className="flex justify-between">
             <div className=" flex gap-2 items-center  grow">
-              <input type="checkbox" name={todo.id} id={todo.id} />
+              <input type="checkbox" className="hidden" name={todo.id} id={todo.id} onChange={(e) => {
+                if (todo.isItCompleted) return
+                dispatch({
+                  type: "COMPLETE-TODO",
+                  data: { todoId: todo.id }
+                })
+              }} checked={todo.isItCompleted} />
               <span
+                className={`cursor-pointer ${todo.isItCompleted && " italic line-through"}`}
                 onClick={() => {
                   todoIdToUpdate.setEditId(todo.id);
                 }}
@@ -42,7 +49,7 @@ const TaskList = () => {
                 {todo.todo}
               </span>
             </div>
-            <div className="flex gap-2 justify-self-end ">
+            <div className={`flex gap-2 justify-self-end ${todo.isItCompleted && "hidden"} `}>
               <label
                 htmlFor={todo.id}
                 className="border rounded p-2 cursor-pointer"

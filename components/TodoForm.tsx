@@ -7,7 +7,7 @@ function TodoForm() {
   const { dispatch, state, uiState, todoIdToUpdate, formState } =
     useAppContext();
   const { dateFromUrl } = useGetParamsFromUrl();
-  let defaultDate = "asdf";
+  let defaultDate = "";
   const d = new Date();
   if (dateFromUrl) {
     const { date, month, year } = dateFromUrl!;
@@ -39,6 +39,7 @@ function TodoForm() {
   };
   const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const { description, time, todo } = inputs
     const formData = new FormData(e.target as HTMLFormElement);
     const formDataObject: { [key: string]: any } = {};
     formData.forEach((value, key) => {
@@ -47,13 +48,13 @@ function TodoForm() {
     if (formState.formStatus === "UpdateTodo") {
       dispatch({
         type: "EDIT-TODO",
-        data: { ...formDataObject, todoId: todoIdToUpdate.editId },
+        data: { description, todo, time, todoId: todoIdToUpdate.editId },
       });
       formState.setFormStatus("AddNew");
       return;
     }
-    console.log({ formDataObject });
-    dispatch({ type: "ADD-TODO", data: formDataObject });
+    dispatch({ type: "ADD-TODO", data: { description, todo, time } });
+    setInputs(p => ({ ...p, description: "", todo: "" }))
   };
   useEffect(() => {
     if ((dateFromUrl && todoIdToUpdate.editId) || todoIdToUpdate.editId) {
@@ -92,6 +93,7 @@ function TodoForm() {
           type="datetime-local"
           value={inputs.time}
           onChange={onChange}
+
           name="time"
           className="bg-transparent border border-white rounded p-1 w-full"
           id="time"

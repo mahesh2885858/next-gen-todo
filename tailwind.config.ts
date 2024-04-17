@@ -21,6 +21,9 @@ const config: Config = {
       width: {
         "1/7": "14.2857143%",
       },
+      gridTemplateRows: {
+        "8": "repeat(8, minmax(0, 1fr))",
+      },
     },
     colors(utils) {
       return {
