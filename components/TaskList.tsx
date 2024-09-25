@@ -16,7 +16,6 @@ const TaskList = () => {
   let x: TDataState[] = state;
   if (dateFromUrl) {
     const { date, month, year } = dateFromUrl;
-    console.log({ state, date, month, year });
     x = state.filter((s) => {
       if (
         String(s.targetDate.day) === String(date) &&
@@ -33,13 +32,20 @@ const TaskList = () => {
         return (
           <div key={todo.id} className="flex justify-between">
             <div className=" flex gap-2 items-center  grow">
-              <input type="checkbox" className="hidden" name={todo.id} id={todo.id} onChange={(e) => {
-                if (todo.isItCompleted) return
-                dispatch({
-                  type: "COMPLETE-TODO",
-                  data: { todoId: todo.id }
-                })
-              }} checked={todo.isItCompleted} />
+              <input
+                type="checkbox"
+                className="hidden"
+                name={todo.id}
+                id={todo.id}
+                onChange={(e) => {
+                  if (todo.isItCompleted) return;
+                  dispatch({
+                    type: "COMPLETE-TODO",
+                    data: { todoId: todo.id },
+                  });
+                }}
+                checked={todo.isItCompleted}
+              />
               <span
                 className={`cursor-pointer ${todo.isItCompleted && " italic line-through"}`}
                 onClick={() => {
@@ -49,7 +55,9 @@ const TaskList = () => {
                 {todo.todo}
               </span>
             </div>
-            <div className={`flex gap-2 justify-self-end ${todo.isItCompleted && "hidden"} `}>
+            <div
+              className={`flex gap-2 justify-self-end ${todo.isItCompleted && "hidden"} `}
+            >
               <label
                 htmlFor={todo.id}
                 className="border rounded p-2 cursor-pointer"
